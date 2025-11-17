@@ -1,0 +1,4 @@
+.exercism/
+*.md
+*Test.php
+*.swp
