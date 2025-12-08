@@ -6,8 +6,8 @@ function toRna(string $dna): string
 {
     $nucleotides = str_split($dna);
     $rna = array_map(
-        function ($item) {
-            return strtr($item, ['G'=>'C', 'C'=>'G', 'A'=>'U', 'T'=>'A']);
-        }, $nucleotides);
+        fn($item) => strtr($item, ['G'=>'C', 'C'=>'G', 'A'=>'U', 'T'=>'A']),
+        $nucleotides
+    );
     return implode($rna);
 }
