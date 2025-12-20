@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 function isArmstrongNumber(int $number): bool
 {
-    $digits = str_split((string) $number);
-    $nb_of_digits = strlen((string) $number);
+    $orygn_number = $number;
+    $digits = [];
+    while ($number >= 10) {
+        $digit = $number % 10;
+        $number = intdiv($number, 10);
+        $digits[] = $digit;
+    }
+    $digits[] = $number;
+    $nb_of_digits = count($digits);
+
     $armstrong_condition = 0;
     foreach($digits as $digit) {
-        $armstrong_condition += ((int) $digit) ** $nb_of_digits;
+        $armstrong_condition += $digit ** $nb_of_digits;
     }
-    return $number === $armstrong_condition;
+
+    return $armstrong_condition === $orygn_number;
 }
