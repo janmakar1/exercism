@@ -1,0 +1,7 @@
+bin/
+obj/
+.editorconfig
+*.csproj
+*Tests.cs
+packages.lock.json
+.vscode/
