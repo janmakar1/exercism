@@ -1,0 +1,23 @@
+module CarsAssemble
+
+let successRate (speed: int): float =
+    if speed = 0 then
+        0.0
+    elif speed >= 1 && speed < 5 then
+        1.0
+    elif speed >= 5 && speed < 9 then
+        0.9
+    elif speed = 9 then
+        0.80
+    elif speed = 10 then
+        0.77
+    else
+        failwith "Speed should be 0 to 10 inclusive"
+
+let productionRatePerHour (speed: int): float =
+    let carsProducedPerHour = 221
+    float speed * float carsProducedPerHour * successRate speed
+
+let workingItemsPerMinute (speed: int): int =
+    int (productionRatePerHour speed / 60.0)
+
