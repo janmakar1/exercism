@@ -31,19 +31,23 @@ const LETTERS = [
     'Z' => 10,
 ];
 
-function score_one_letter($letter) {
-    if (!ctype_alpha($letter)) {
-        return 0;
-    }
-    return LETTERS[strtoupper($letter)];
-}
+/* needs to be uncommented if the last solution will be used */
+// function score_one_letter($letter) {
+//     return LETTERS[strtoupper($letter)];
+// }
 
 function score(string $word): int
 {
-    $s = 0;
-    foreach(str_split($word) as $letter) {
-        $s += score_one_letter($letter);
-    }
-    
-    return $s;
+    return array_reduce(
+        str_split($word),
+        fn($carry, $letter) => $carry + LETTERS[strtoupper($letter)],
+        0
+    );
+
+    // return array_map(fn($x) => LETTERS[strtoupper($x)], str_split($word))
+    // |> array_sum(...);
+
+    /* proposed solution */
+    // return array_map(score_one_letter(...), str_split($word))
+    // |> array_sum(...);
 }
