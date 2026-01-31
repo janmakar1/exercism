@@ -1,4 +1,7 @@
 .exercism/
 *.md
-*Test.php
 *.swp
+
+.metals/
+.vscode/
+target/

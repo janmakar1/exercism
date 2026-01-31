@@ -4,4 +4,4 @@ gradle/
 build.gradle
 gradlew
 gradlew.bat
-src/test/*
+*Test.java
