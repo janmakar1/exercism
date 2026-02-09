@@ -1,27 +1,16 @@
 class DifferenceOfSquaresCalculator {
 
     int computeSquareOfSumTo(int input) {
-        int sum = 0;
-        for (int i = 1; i <= input; i++) {
-            sum += i;
-        }
+        int sum = input*(input+1)/2;
         return sum * sum;
     }
 
     int computeSumOfSquaresTo(int input) {
-        int sumOfSquares = 0;
-        for (int i = 1; i <= input; i++) {
-            sumOfSquares += i * i;            
-        }
-        return sumOfSquares;
+        return input * (input + 1) * (2 *input + 1) / 6;
     }
 
     int computeDifferenceOfSquares(int input) {
-        int squareOfSum = computeSquareOfSumTo(input);
-        int sumOfSquares = computeSumOfSquaresTo(input);
-        return squareOfSum > sumOfSquares ? 
-            squareOfSum - sumOfSquares :
-            sumOfSquares - squareOfSum;
+        return computeSquareOfSumTo(input) - computeSumOfSquaresTo(input);
     }
 
 }
