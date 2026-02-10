@@ -1,6 +1,6 @@
 public class CarsAssemble {
 
-    private final int carsPerHours = 221;
+    private static final int CARS_PER_HOURS = 221;
 
     private double successRate(int speed) {
         if (speed == 0) {
@@ -17,10 +17,10 @@ public class CarsAssemble {
     }
 
     public double productionRatePerHour(int speed) {
-        return speed * this.carsPerHours * this.successRate(speed);
+        return speed * CARS_PER_HOURS * successRate(speed);
     }
 
     public int workingItemsPerMinute(int speed) {
-        return (int) Math.floor(this.productionRatePerHour(speed) / 60);
+        return (int) Math.floor(productionRatePerHour(speed) / 60);
     }
 }
