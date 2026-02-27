@@ -1,12 +1,14 @@
 object Raindrops {
+  private val drops = Seq(
+    3 -> "Pling",
+    5 -> "Plang",
+    7 -> "Plong"
+  ) 
+
   def convert(n: Int): String =
-    (n % 3 == 0, n % 5 == 0, n % 7 == 0) match
-      case (true, true, true) => "PlingPlangPlong"
-      case (true, false, false) => "Pling"
-      case (false, true, false) => "Plang"
-      case (false, false, true) => "Plong"
-      case (true, true, false) => "PlingPlang"
-      case (true, false, true) => "PlingPlong"
-      case (false, true, true) => "PlangPlong"
-      case (false, false, false) => n.toString()
+    val sounds = for {
+      (factor, sound) <- drops if n % factor == 0
+    } yield sound
+
+    if sounds.isEmpty then n.toString else sounds.mkString
 }
