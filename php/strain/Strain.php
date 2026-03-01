@@ -8,7 +8,7 @@ class Strain
     {
         $result = [];
         foreach ($list as $elem) {
-            if ($predicate($elem) == true) {
+            if ($predicate($elem) === true) {
                 $result[] = $elem;
             }
         }
@@ -19,7 +19,7 @@ class Strain
     {
         $result = [];
         foreach ($list as $elem) {
-            if ($predicate($elem) != true) {
+            if ($predicate($elem) === false) {
                 $result[] = $elem;
             }
         }
