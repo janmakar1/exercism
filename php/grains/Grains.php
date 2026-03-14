@@ -9,14 +9,24 @@ function square(int $number): string
         throw new InvalidArgumentException("Argument should be in range(0-64>");
     }
     
-    return (string) (2 ** ($number - 1));
+    return sprintf ("%u", 2 ** ($number - 1));
 }
 
 function total(): string
 {
-    $sum = 0;
+    $sum = 0.;
     foreach(range(1, 64) as $number) {
-        $sum += square($number);
+        $sum += (float) square($number);
     }
-    return (string) $sum;
+    // return (string) $sum; // returns scientific notation e+
+    
+    return sprintf ("%u", $sum); // returns 0
+
+    /*returns number 1 greater that the correct value
+    and with leading zeros */
+    // $with_dot_and_zeros = sprintf("%f", floor($sum));
+    // $parts = explode(".", $with_dot_and_zeros);
+    // return $parts[0];
+
+    // return '18446744073709551615'; // xD
 }
