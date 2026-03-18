@@ -9,13 +9,8 @@ let response (input: string): string =
     let isShouting = inputTrimmed |> String.filter Char.IsLetter |> String.forall Char.IsUpper
     let isSilence = inputTrimmed |> String.IsNullOrWhiteSpace
 
-    if isSilence then
-        "Fine. Be that way!"
-    else if isQuestion && hasLetters && isShouting then
-        "Calm down, I know what I'm doing!"
-    else if isQuestion then
-        "Sure."
-    else if isShouting && hasLetters then
-        "Whoa, chill out!"
-    else
-        "Whatever."
+    if isSilence then "Fine. Be that way!"
+    elif isShouting && isQuestion && hasLetters then "Calm down, I know what I'm doing!"
+    elif isShouting && hasLetters then "Whoa, chill out!"
+    elif isQuestion then "Sure."
+    else "Whatever."
