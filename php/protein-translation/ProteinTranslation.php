@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class ProteinTranslation
 {
-    const CODON_TO_PROTEIN = [
+    private const CODON_TO_PROTEIN = [
         "AUG" => "Methionine",
         "UUU" => "Phenylalanine",
         "UUC" => "Phenylalanine",
@@ -19,20 +19,20 @@ class ProteinTranslation
         "UGU" => "Cysteine",
         "UGC" => "Cysteine",
         "UGG" => "Tryptophan",
-        "UAA" => "STOP",
-        "UAG" => "STOP",
-        "UGA" => "STOP",
+        "UAA" => self::STOP,
+        "UAG" => self::STOP,
+        "UGA" => self::STOP,
     ];
-    const INVALID_CODON = -1;
+    private const INVALID_CODON = "not really a codon :D";
+    private const STOP = "STOP";
 
     public function getProteins(string $codons): array
     {
         $proteins = [];
-        $codonsArray = str_split($codons, 3);
 
-        foreach($codonsArray as $codon) {
+        foreach(str_split($codons, 3) as $codon) {
             $protein = static::CODON_TO_PROTEIN[$codon] ?? static::INVALID_CODON;
-            if ($protein === "STOP") {
+            if ($protein === static::STOP) {
                 break;
             } else if ($protein === static::INVALID_CODON) {
                 throw new InvalidArgumentException("Invalid codon");
