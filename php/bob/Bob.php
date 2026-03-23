@@ -8,21 +8,18 @@ class Bob
     {
         $str = trim($str);
 
-        $is_question = str_ends_with($str, '?');
-        $is_shouting = strtoupper($str) === $str;
-        $has_letters = array_any(str_split($str), fn($ch) => ctype_alpha($ch));
-        $is_white_space = array_all(str_split($str), fn($ch) => ctype_space($ch));
+        $is_question = fn ($s) => str_ends_with($s, '?');
+        $is_shouting = fn ($s) => strtoupper($s) === $s;
+        $has_letters = fn ($s) => array_any(str_split($s), fn($ch) => ctype_alpha($ch));
+        $is_white_space = fn ($s) => array_all(str_split($s), fn($ch) => ctype_space($ch));
 
-        if ($is_white_space) {
-            return 'Fine. Be that way!';
-        } elseif ($is_question && $is_shouting && $has_letters) {
-            return 'Calm down, I know what I\'m doing!';
-        } elseif ($is_question) {
-            return 'Sure.';
-        } elseif ($is_shouting && $has_letters) {
-            return 'Whoa, chill out!';
-        } else {
-            return 'Whatever.';
-        }
+        return match(true) {
+            $is_white_space($str) => 'Fine. Be that way!',
+            ($is_question($str) && $is_shouting($str) && $has_letters($str)) => "Calm down, I know what I'm doing!",
+            $is_question($str) => 'Sure.',
+            ($is_shouting($str) && $has_letters($str)) => 'Whoa, chill out!',
+            default => 'Whatever.'
+        };
+
     }
 }
