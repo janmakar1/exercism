@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 class DndCharacter
 {
-    public $strength;
-    public $dexterity;
-    public $constitution;
-    public $intelligence;
-    public $wisdom;
-    public $charisma;
-    public $hitpoints;
+    public int $strength;
+    public int $dexterity;
+    public int $constitution;
+    public int $intelligence;
+    public int $wisdom;
+    public int $charisma;
+    public int $hitpoints;
 
     public function __construct()
     {
@@ -31,7 +31,7 @@ class DndCharacter
 
     public static function ability(): int
     {
-        $dnd = new DndCharacter();
+        $dnd = new self();
 
         $all_abilities = [$dnd->strength,
             $dnd->dexterity,
@@ -59,7 +59,7 @@ class DndCharacter
         $minimum = min($single_scores);
         $min_key = array_find_key(
             $single_scores,
-            function ($val) use ($minimum) { return $val === $minimum; }
+            fn ($val) => $val === $minimum
         );
         unset($single_scores[$min_key]);
 
