@@ -4,35 +4,80 @@ declare(strict_types=1);
 
 class Yacht
 {
-    private const CATEGORIES = [
-        'ones',
-        'twos',
-        'threes',
-        'fours',
-        'fives',
-        'sixes',
-        'full house',
-        'four of a kind',
-        'little straight',
-        'big straight',
-        'choice',
-        'yacht'
-    ];
+    public function score(array $rolls, string $category): int
+    {
+        return match ($category) {
+            'ones' => $this->score_numbers($rolls, 1),
+            'twos' => $this->score_numbers($rolls, 2),
+            'threes' => $this->score_numbers($rolls, 3),
+            'fours' => $this->score_numbers($rolls, 4),
+            'fives' => $this->score_numbers($rolls, 5),
+            'sixes' => $this->score_numbers($rolls, 6),
+            'full house' => $this->score_full_house($rolls),
+            'four of a kind' => $this->score_four_of_kind($rolls),
+            'little straight' => $this->score_little_straight($rolls),
+            'big straight' => $this->score_big_straight($rolls),
+            'choice' => array_sum($rolls),
+            'yacht' => $this->score_yacht($rolls),
+        };
+    }
 
     private function score_numbers(array $rolls, int $number): int
     {
-        $ones = array_filter($rolls, fn($val) => $val === $number);
+        $ones = array_filter($rolls, fn ($val) => $val === $number);
+
         return count($ones) * $number;
     }
 
-    private function score_yacht(array $rolls): int
+    private function are_equal(int ...$numbers)
     {
-        foreach (range(1, 6) as $value) {
-            $is_yacht_of_value = array_all($rolls, fn ($x) => $x === $value);
-            if ($is_yacht_of_value === true) {
-                return 50;
+        $first_number = $numbers[0];
+        foreach ($numbers as $number) {
+            if ($number !== $first_number) {
+                return false;
             }
         }
+
+        return true;
+    }
+
+    private function score_full_house(array $rolls): int
+    {
+        sort($rolls);
+
+        if ($this->are_equal($rolls[0], $rolls[1], $rolls[2])
+            && $this->are_equal($rolls[3], $rolls[4])) {
+            if ($this->are_equal($rolls[0], $rolls[3])) {
+                // "yacht is not a full house" case
+                return 0;
+            }
+
+            return array_sum($rolls);
+        }
+        if ($this->are_equal($rolls[0], $rolls[1])
+        && $this->are_equal($rolls[2], $rolls[3], $rolls[4])) {
+            if ($this->are_equal($rolls[0], $rolls[2])) {
+                // "yacht is not a full house" case
+                return 0;
+            }
+
+            return array_sum($rolls);
+        }
+
+        return 0;
+    }
+
+    private function score_four_of_kind(array $rolls): int
+    {
+        sort($rolls);
+
+        if ($this->are_equal($rolls[0], $rolls[1], $rolls[2], $rolls[3])) {
+            return array_sum(array_slice($rolls, 0, 4));
+        }
+        if ($this->are_equal($rolls[1], $rolls[2], $rolls[3], $rolls[4])) {
+            return array_sum(array_slice($rolls, 1, 4));
+        }
+
         return 0;
     }
 
@@ -40,6 +85,7 @@ class Yacht
     {
         sort($rolls);
         $scored = $rolls === [1, 2, 3, 4, 5];
+
         return $scored ? 30 : 0;
     }
 
@@ -47,34 +93,19 @@ class Yacht
     {
         sort($rolls);
         $scored = $rolls === [2, 3, 4, 5, 6];
+
         return $scored ? 30 : 0;
     }
-    
-    private function not_finished(): int{
-        throw new \BadMethodCallException(sprintf('Implement the %s method', __FUNCTION__));
-    }
 
-    public function score(array $rolls, string $category): int
+    private function score_yacht(array $rolls): int
     {
-        return match($category) {
-            'ones' => $this->score_numbers($rolls, 1),
-            'twos' => $this->score_numbers($rolls, 2),
-            'threes' => $this->score_numbers($rolls, 3),
-            'fours' => $this->score_numbers($rolls, 4),
-            'fives' => $this->score_numbers($rolls, 5),
-            'sixes' => $this->score_numbers($rolls, 6),
-            'full house' => $this->not_finished(),
-            'four of a kind' => $this->not_finished(),
-            'little straight' => $this->score_little_straight($rolls),
-            'big straight' => $this->score_big_straight($rolls),
-            'choice' => array_sum($rolls),
-            'yacht' => $this->score_yacht($rolls),
-            default => $this->not_finished(),
-        };
+        foreach (range(1, 6) as $value) {
+            $is_yacht_of_value = array_all($rolls, fn ($x) => $x === $value);
+            if (true === $is_yacht_of_value) {
+                return 50;
+            }
+        }
+
+        return 0;
     }
 }
-
-
-// $yacht = new Yacht();
-
-// 37:09
