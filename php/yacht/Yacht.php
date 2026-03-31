@@ -6,6 +6,8 @@ class Yacht
 {
     public function score(array $rolls, string $category): int
     {
+        sort($rolls);
+
         return match ($category) {
             'ones' => $this->score_numbers($rolls, 1),
             'twos' => $this->score_numbers($rolls, 2),
@@ -24,9 +26,10 @@ class Yacht
 
     private function score_numbers(array $rolls, int $number): int
     {
-        $ones = array_filter($rolls, fn ($val) => $val === $number);
+        $counted_values = array_count_values($rolls);
+        $counted_values_of_number = $counted_values[$number] ?? 0;
 
-        return count($ones) * $number;
+        return $counted_values_of_number * $number;
     }
 
     private function are_equal(int ...$numbers)
@@ -43,8 +46,6 @@ class Yacht
 
     private function score_full_house(array $rolls): int
     {
-        sort($rolls);
-
         if ($this->are_equal($rolls[0], $rolls[1], $rolls[2])
             && $this->are_equal($rolls[3], $rolls[4])) {
             if ($this->are_equal($rolls[0], $rolls[3])) {
@@ -69,8 +70,6 @@ class Yacht
 
     private function score_four_of_kind(array $rolls): int
     {
-        sort($rolls);
-
         if ($this->are_equal($rolls[0], $rolls[1], $rolls[2], $rolls[3])) {
             return array_sum(array_slice($rolls, 0, 4));
         }
@@ -83,7 +82,6 @@ class Yacht
 
     private function score_little_straight(array $rolls): int
     {
-        sort($rolls);
         $scored = $rolls === [1, 2, 3, 4, 5];
 
         return $scored ? 30 : 0;
@@ -91,7 +89,6 @@ class Yacht
 
     private function score_big_straight(array $rolls): int
     {
-        sort($rolls);
         $scored = $rolls === [2, 3, 4, 5, 6];
 
         return $scored ? 30 : 0;
