@@ -34,14 +34,7 @@ class Yacht
 
     private function are_equal(int ...$numbers)
     {
-        $first_number = $numbers[0];
-        foreach ($numbers as $number) {
-            if ($number !== $first_number) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all($numbers, fn ($number) => $number === $numbers[0]);
     }
 
     private function score_full_house(array $rolls): int
@@ -96,13 +89,6 @@ class Yacht
 
     private function score_yacht(array $rolls): int
     {
-        foreach (range(1, 6) as $value) {
-            $is_yacht_of_value = array_all($rolls, fn ($x) => $x === $value);
-            if (true === $is_yacht_of_value) {
-                return 50;
-            }
-        }
-
-        return 0;
+        return count(array_count_values($rolls)) === 1 ? 50 : 0;
     }
 }
