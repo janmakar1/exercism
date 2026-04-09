@@ -89,6 +89,8 @@ class Yacht
 
     private function score_yacht(array $rolls): int
     {
-        return count(array_count_values($rolls)) === 1 ? 50 : 0;
+        $is_there_yacht = count(array_count_values($rolls)) === 1;
+
+        return $is_there_yacht ? 50 : 0;
     }
 }
