@@ -30,7 +30,7 @@ pub fn total(days: List(Int)) -> Int {
 pub fn busy_days(days: List(Int)) -> Int {
   case days {
     [day, ..rest] if day >= 5 -> 1 + busy_days(rest)
-    [_day, ..rest] -> busy_days(rest)
+    [_, ..rest] -> busy_days(rest)
     _ -> 0
   }
 }
