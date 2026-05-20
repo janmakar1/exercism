@@ -1,5 +1,4 @@
 .exercism/
-*.md
 *.swp
 
 .metals/
