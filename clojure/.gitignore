@@ -1,6 +1,3 @@
 .lein-failures
-deps.edn
-project.clj
-test/
 .clj-kondo/
 .lsp/
