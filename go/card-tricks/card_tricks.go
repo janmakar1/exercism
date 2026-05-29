@@ -12,12 +12,7 @@ func GetItem(slice []int, index int) int {
 		return -1
 	}
 
-	for idx, item := range slice {
-		if idx == index {
-			return item
-		}
-	}
-	return -1
+	return slice[index]
 }
 
 // SetItem writes an item to a slice at given position overwriting an existing value.
