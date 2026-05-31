@@ -24,7 +24,6 @@ func SetItem(slice []int, index, value int) []int {
 
 	slice[index] = value
 	return slice
-
 }
 
 // PrependItems adds an arbitrary number of values at the front of a slice.
