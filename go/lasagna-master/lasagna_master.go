@@ -8,19 +8,14 @@ func PreparationTime(layers []string, preparationTimePerLayer int) int {
 }
 
 func Quantities(layers []string) (noodles int, sauce float64) {
-	var sauceQnt, noodlesQnt int
-
 	for _, layer := range layers {
 		if layer == "sauce" {
-			sauceQnt += 1
-		}
-		if layer == "noodles" {
-			noodlesQnt += 1
+			sauce += 0.2
+		} else if layer == "noodles" {
+			noodles += 50
 		}
 	}
 
-	noodles = noodlesQnt * 50
-	sauce = float64(sauceQnt) * 0.2
 	return
 }
 
@@ -31,10 +26,9 @@ func AddSecretIngredient(friendsIngredients, myIngredients []string) {
 
 func ScaleRecipe(amounts []float64, portionsNumber int) []float64 {
 	newRecipe := make([]float64, len(amounts))
-	copy(newRecipe, amounts)
 	scale := float64(portionsNumber) / 2.0
-	for idx, oldAmount := range newRecipe {
-		newRecipe[idx] = oldAmount * scale
+	for idx := range newRecipe {
+		newRecipe[idx] = amounts[idx] * scale
 	}
 	return newRecipe
 }
