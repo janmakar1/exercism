@@ -24,14 +24,13 @@ func AddItem(bill, units map[string]int, item, unit string) bool {
 	unitValue, exists := units[unit]
 	if !exists {
 		return false
-	} else {
-		// Otherwise add the item to the customer bill, indexed by the item name, then return true.
-		// If the item is already present in the bill, increase its quantity by the amount that belongs to the provided unit.
-		bill[item] += unitValue
-
-		return true
 	}
 
+	// Otherwise add the item to the customer bill, indexed by the item name, then return true.
+	// If the item is already present in the bill, increase its quantity by the amount that belongs to the provided unit.
+	bill[item] += unitValue
+
+	return true
 }
 
 // RemoveItem removes an item from customer bill.
@@ -48,25 +47,26 @@ func RemoveItem(bill, units map[string]int, item, unit string) bool {
 		return false
 	}
 
-	// Return false if the new quantity would be less than 0.
 	newItemQuantity := itemQuantity - unitValue
-	if newItemQuantity < 0 {
+	switch {
+	// Return false if the new quantity would be less than 0.
+	case newItemQuantity < 0:
 		return false
-	}
 
 	// If the new quantity is 0, completely remove the item from the bill then return true.
-	if newItemQuantity == 0 {
+	case newItemQuantity == 0:
 		delete(bill, item)
 		return true
-	}
 
 	// Otherwise, reduce the quantity of the item and return true.
-	bill[item] = newItemQuantity
-	return true
+	default:
+		bill[item] = newItemQuantity
+		return true
+	}
 }
 
 // GetItem returns the quantity of an item that the customer has in his/her bill.
-func GetItem(bill map[string]int, item string) (int, bool) {
-	qty, exists := bill[item]
-	return qty, exists
+func GetItem(bill map[string]int, item string) (qty int, exists bool) {
+	qty, exists = bill[item]
+	return
 }
