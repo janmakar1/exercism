@@ -2,14 +2,14 @@ package gross
 
 // Units stores the Gross Store unit measurements.
 func Units() map[string]int {
-	units := make(map[string]int)
-	units["quarter_of_a_dozen"] = 3
-	units["half_of_a_dozen"] = 6
-	units["dozen"] = 12
-	units["small_gross"] = 120
-	units["gross"] = 144
-	units["great_gross"] = 1728
-	return units
+	return map[string]int{
+		"quarter_of_a_dozen": 3,
+		"half_of_a_dozen":    6,
+		"dozen":              12,
+		"small_gross":        120,
+		"gross":              144,
+		"great_gross":        1728,
+	}
 }
 
 // NewBill creates a new bill.
@@ -19,7 +19,6 @@ func NewBill() map[string]int {
 
 // AddItem adds an item to customer bill.
 func AddItem(bill, units map[string]int, item, unit string) bool {
-
 	// Return false if the given unit is not in the units map.
 	unitValue, exists := units[unit]
 	if !exists {
@@ -56,17 +55,16 @@ func RemoveItem(bill, units map[string]int, item, unit string) bool {
 	// If the new quantity is 0, completely remove the item from the bill then return true.
 	case newItemQuantity == 0:
 		delete(bill, item)
-		return true
 
 	// Otherwise, reduce the quantity of the item and return true.
 	default:
 		bill[item] = newItemQuantity
-		return true
 	}
+	return true
 }
 
 // GetItem returns the quantity of an item that the customer has in his/her bill.
-func GetItem(bill map[string]int, item string) (qty int, exists bool) {
-	qty, exists = bill[item]
-	return
+func GetItem(bill map[string]int, item string) (int, bool) {
+	qty, exists := bill[item]
+	return qty, exists
 }
