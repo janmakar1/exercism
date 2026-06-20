@@ -1,18 +1,20 @@
 object CollatzCalculator {
     fun computeStepCount(start: Int): Int {
-        if (start <= 0) {
-            throw IllegalArgumentException()
+        require(start > 0) {
+            "start must be a positive argument"
         }
-        var steps = 0
-        var n = start
-        while (n != 1) {
-            if (n % 2 == 0) {
-                n = n / 2
-            } else {
-                n = 3 * n + 1
-            }
-            steps += 1
-        }
-        return steps
+
+        val result = computeStepCountRec(start, 0)
+        return result
     }
+
+    tailrec fun computeStepCountRec(
+        n: Int,
+        steps: Int,
+    ): Int =
+        when {
+            n == 1 -> steps
+            (n % 2 == 0)	-> computeStepCountRec(n / 2, steps + 1)
+            else -> computeStepCountRec(3 * n + 1, steps + 1)
+        }
 }
