@@ -13,8 +13,7 @@ func VoteCount(counter *int) int {
 	if counter == nil {
 		return 0
 	}
-	votes := *counter
-	return votes
+	return *counter
 }
 
 // IncrementVoteCount increments the value in a vote counter.
@@ -42,6 +41,7 @@ func DecrementVotesOfCandidate(results map[string]int, candidate string) {
 	for name := range results {
 		if name == candidate {
 			results[name]--
+			return
 		}
 	}
 }
