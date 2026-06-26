@@ -8,13 +8,7 @@ func Schedule(date string) time.Time {
 
 	layout := "1/2/2006 15:04:05"
 
-	then, err := time.Parse(layout, date)
-
-	if err != nil {
-		fmt.Print("Error parsing string!: ")
-		fmt.Println(err)
-		fmt.Println("Time returned: ", then)
-	}
+	then, _ := time.Parse(layout, date)
 
 	return then
 }
@@ -22,14 +16,7 @@ func Schedule(date string) time.Time {
 // HasPassed returns whether a date has passed.
 func HasPassed(date string) bool {
 	layout := "January 2, 2006 15:04:05"
-
-	then, err := time.Parse(layout, date)
-
-	if err != nil {
-		fmt.Print("Error parsing string!: ")
-		fmt.Println(err)
-		fmt.Println("Time returned: ", then)
-	}
+	then, _ := time.Parse(layout, date)
 
 	return then.Before(time.Now())
 }
@@ -38,22 +25,11 @@ func HasPassed(date string) bool {
 func IsAfternoonAppointment(date string) bool {
 
 	layout := "Monday, January 2, 2006 15:04:05"
-
-	then, err := time.Parse(layout, date)
-
-	if err != nil {
-		fmt.Print("Error parsing string!: ")
-		fmt.Println(err)
-		fmt.Println("Time returned: ", then)
-	}
+	then, _ := time.Parse(layout, date)
 
 	hour := then.Hour()
 
-	if hour >= 12 && hour < 18 {
-		return true
-	} else {
-		return false
-	}
+	return hour >= 12 && hour < 18
 
 }
 
@@ -62,16 +38,17 @@ func Description(date string) string {
 
 	layout := "1/2/2006 15:04:05"
 
-	then, err := time.Parse(layout, date)
+	then, _ := time.Parse(layout, date)
 
-	if err != nil {
-		fmt.Print("Error parsing string!: ")
-		fmt.Println(err)
-		fmt.Println("Time returned: ", then)
-	}
-
-	return fmt.Sprintf("You have an appointment on %s, %s %d, %d, at %d:%d.", then.Weekday(), then.Month(), then.Day(), then.Year(), then.Hour(), then.Minute())
-
+	return fmt.Sprintf(
+		"You have an appointment on %s, %s %d, %d, at %d:%d.",
+		then.Weekday(),
+		then.Month(),
+		then.Day(),
+		then.Year(),
+		then.Hour(),
+		then.Minute(),
+	)
 }
 
 // AnniversaryDate returns a Time with this year's anniversary.
