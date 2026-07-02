@@ -1,41 +1,21 @@
-import kotlin.math.floor
+import kotlin.math.min
 import kotlin.random.Random
 
 class DndCharacter {
-    val strength: Int = rollDice()
-    val dexterity: Int = rollDice()
-    val constitution: Int = rollDice()
-    val intelligence: Int = rollDice()
-    val wisdom: Int = rollDice()
-    val charisma: Int = rollDice()
-
-    val hitpoints: Int = 10 + DndCharacter.modifier(constitution)
+    val strength: Int = ability()
+    val dexterity: Int = ability()
+    val constitution: Int = ability()
+    val intelligence: Int = ability()
+    val wisdom: Int = ability()
+    val charisma: Int = ability()
+    val hitpoints: Int = 10 + modifier(constitution)
 
     companion object {
         fun ability(): Int {
-            val obj = DndCharacter()
-
-            val abilities =
-                listOf(
-                    obj.strength,
-                    obj.dexterity,
-                    obj.constitution,
-                    obj.intelligence,
-                    obj.wisdom,
-                    obj.charisma,
-                )
-            return abilities.random()
+            val list = List(4) { (1..6).random() }
+            return list.sum() - list.min()
         }
 
-        fun modifier(score: Int): Int {
-            val difference = score - 10
-            val modifierNotRounded = difference / 2.0
-            return floor(modifierNotRounded).toInt()
-        }
-
-        private fun rollDice(): Int {
-            val list = List(4) { Random.nextInt(6) }
-            return list.sorted().take(3).sum()
-        }
+        fun modifier(score: Int): Int = (score - 10).floorDiv(2)
     }
 }
