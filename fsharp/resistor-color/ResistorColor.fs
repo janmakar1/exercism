@@ -5,4 +5,4 @@ let colors: string list = [
 ]
 
 let colorCode (color: string): int =
-    List.findIndex (fun elm -> elm.Equals color) colors
+    List.findIndex (fun elem -> elem.Equals color) colors
