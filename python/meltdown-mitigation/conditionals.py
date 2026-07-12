@@ -44,16 +44,17 @@ def reactor_efficiency(voltage, current, theoretical_max_power):
         where generated power = voltage * current
     """
     percentage_value = (voltage * current) / theoretical_max_power * 100
-    is_black = check_if_less(percentage_value, 30, 'black')
-    is_red = check_if_less(percentage_value, 60, 'red')
-    is_orange = check_if_less(percentage_value, 80, 'orange')
-    return is_black or is_red or is_orange or 'green'
 
+    thresholds = [
+        (30, 'black'),
+        (60, 'red'),
+        (80, 'orange'),
+    ]
+    for limit, label in thresholds:
+        if percentage_value < limit:
+            return label
 
-def check_if_less(var, threshold, returning_value):
-    if var < threshold:
-        return returning_value
-    return None
+    return 'green'
 
 
 def fail_safe(temperature, neutrons_produced_per_second, threshold):
@@ -75,8 +76,12 @@ def fail_safe(temperature, neutrons_produced_per_second, threshold):
     value = temperature * neutrons_produced_per_second
     low_threshold = 0.9 * threshold
     normal_threshold = 1.1 * threshold
-    if value < low_threshold:
-        return 'LOW'
-    if value < normal_threshold:
-        return 'NORMAL'
+    thresholds = [
+        (low_threshold, 'LOW'),
+        (normal_threshold, 'NORMAL'),
+    ]
+    for limit, label in thresholds:
+        if value < limit:
+            return label
+
     return 'DANGER'
