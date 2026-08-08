@@ -37,29 +37,22 @@ func CountInRank(cb Chessboard, rank int) int {
 
 }
 
-func countSquares(cb Chessboard, occupiedOnly bool) int {
+// CountAll should count how many squares are present in the chessboard.
+func CountAll(cb Chessboard) int {
 	count := 0
-
 	for _, rank := range cb {
-		for _, square := range rank {
-			if occupiedOnly {
-				if square {
-					count++
-				}
-			} else {
-				count++
-			}
+		for _ = range rank {
+			count++
 		}
 	}
 	return count
 }
 
-// CountAll should count how many squares are present in the chessboard.
-func CountAll(cb Chessboard) int {
-	return countSquares(cb, false)
-}
-
 // CountOccupied returns how many squares are occupied in the chessboard.
 func CountOccupied(cb Chessboard) int {
-	return countSquares(cb, true)
+	count := 0
+	for file := range cb {
+		count += CountInFile(cb, file)
+	}
+	return count
 }

@@ -1,15 +1,14 @@
 package etl
 
 import "strings"
+import "fmt"
 
 func Transform(in map[int][]string) map[string]int {
 	out := make(map[string]int)
 
 	for points, lettersSlice := range in {
-
 		for _, letter := range lettersSlice {
-			smallLetter := strings.ToLower(letter)
-			out[smallLetter] = points
+			out[strings.ToLower(letter)] = points
 		}
 	}
 
