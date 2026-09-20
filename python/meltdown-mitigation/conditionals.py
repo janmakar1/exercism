@@ -81,7 +81,7 @@ def fail_safe(temperature, neutrons_produced_per_second, threshold):
     """
     value = temperature * neutrons_produced_per_second / threshold
     for limit, label in FAIL_SAFE_THRESHOLDS:
-        if value  < limit:
+        if value < limit:
             return label
 
     return 'DANGER'
