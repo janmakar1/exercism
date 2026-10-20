@@ -1,0 +1,4 @@
+# Gitignore for TypeScript
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/
