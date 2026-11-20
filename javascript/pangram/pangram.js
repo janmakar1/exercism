@@ -1,5 +1,7 @@
 // @ts-check
 
+/** Constant containing all ascii letters; equivalent to python's string.ascii_lowercase */
+const LETTERS = 'abcdefghijklmnoprstuwxyz';
 /**
  * Checks if sentence is a pangram
  * 
@@ -7,12 +9,6 @@
  * @returns {bool}
  */
 export const isPangram = (sentence) => {
+  return LETTERS.split('').every(letterInAlphabet => sentence.toLowerCase().includes(letterInAlphabet))
+};
 
-  let allChars = new Set(sentence.toLowerCase());
-
-  let nonLetters = new Set([' ', '_', '-', '"', "'", '.']);
-  let digits = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9']);
-  let letters = allChars.difference(nonLetters).difference(digits);
-
-  return letters.size === 26;
-}
